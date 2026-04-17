@@ -5,7 +5,7 @@ Repositorio central del proyecto. Sistema SaaS B2B para la gestion de bares ludi
 ## 1. Estructura del Proyecto
 
 El repositorio utiliza una estructura de monorepo para facilitar la gestion de dependencias y el despliegue continuo.
-
+```
 /
 ├── backend/             # API REST en Node.js y Express (Desplegado en Azure)
 ├── frontend/            # Aplicacion React con Vite y TypeScript (Desplegado en Vercel)
@@ -13,7 +13,7 @@ El repositorio utiliza una estructura de monorepo para facilitar la gestion de d
 ├── .github/workflows/   # Configuracion de CI/CD para Azure y Vercel
 ├── .gitignore           # Exclusion de node_modules y archivos .env
 └── README.md            # Documentacion principal
-
+```
 ## 2. Linea Base y Requisitos
 
 El proyecto se encuentra en su Linea Base 0. El entorno esta configurado para asegurar que el despliegue sea exitoso desde el inicio.
