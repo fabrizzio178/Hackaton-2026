@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import './App.css'
 import imgJuegos from './assets/Juego.png'
 import imgCarta from './assets/Carta.png'
+import imgJonjo from './assets/jonjo.jpg'
 import { Truco } from './components/games/Truco'
 import { Poker } from './components/games/Poker'
 import { Ajedrez } from './components/games/Ajedrez'
@@ -185,9 +186,10 @@ function LandingPage({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
         <div className="footer-divider" />
         <p className="footer-text">Hoy serás atendido por:</p>
         <div className="bartender">
-          <div className="bartender-photo">
-            <span className="bartender-initial">?</span>
-          </div>
+          <div
+            className="bartender-photo"
+            style={{ backgroundImage: `url(${imgJonjo})` }}
+          />
           <span className="bartender-name">Juan Jose Alonso</span>
         </div>
       </footer>

@@ -154,20 +154,12 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
   border: 2px solid rgba(240, 192, 64, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   box-shadow: 0 0 12px rgba(240, 192, 64, 0.2);
   flex-shrink: 0;
-}
-
-.bartender-initial {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.3rem;
-  color: #f0c040;
-  opacity: 0.6;
+  background-size: cover;
+  background-position: center center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .bartender-name {
