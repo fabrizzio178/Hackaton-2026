@@ -1,8 +1,13 @@
 import { useState, useRef } from 'react'
 import './App.css'
-import { ActionMenu } from './components/ActionMenu'
-import { RulesModal } from './components/RulesModal'
-import { AIChatModal } from './components/AIChatModal'
+import { Truco } from './components/games/Truco'
+import { Poker } from './components/games/Poker'
+import { Juego3 } from './components/games/Juego3'
+import { Juego4 } from './components/games/Juego4'
+import { Juego5 } from './components/games/Juego5'
+import { Juego6 } from './components/games/Juego6'
+import { Dados } from './components/games/Dados'
+import { Sorteo } from './components/games/Sorteo'
 
 type Screen = 'landing' | 'main'
 type Tab = 'juegos' | 'carta'
@@ -21,37 +26,15 @@ const JUEGOS = [
 const GRID_JUEGOS = JUEGOS.slice(0, 6)
 const EXTRA_JUEGOS = JUEGOS.slice(6)
 
-function GameScorer({ gameId, onBack }: { gameId: string; onBack: () => void }) {
-  const juego = JUEGOS.find(j => j.id === gameId)!
-  const [modal, setModal] = useState<'rules' | 'chat' | null>(null)
-
-  return (
-    <div className="scorer-view">
-      <button className="scorer-back-btn" onClick={onBack} type="button">←</button>
-
-      <div className="scorer-title">
-        <span className="scorer-emoji">{juego.emoji}</span>
-        <h2 className="scorer-name">{juego.label}</h2>
-      </div>
-
-      <div className="scorer-action-menu">
-        <ActionMenu
-          onOpenRules={() => setModal('rules')}
-          onOpenChat={() => setModal('chat')}
-        />
-      </div>
-
-      {modal === 'rules' && (
-        <RulesModal
-          content={`# Reglas de ${juego.label}\n\n(placeholder — reemplazar con el archivo .md correspondiente)`}
-          onClose={() => setModal(null)}
-        />
-      )}
-      {modal === 'chat' && (
-        <AIChatModal onClose={() => setModal(null)} />
-      )}
-    </div>
-  )
+const GAME_COMPONENTS: Record<string, React.ComponentType<{ onBack: () => void }>> = {
+  truco:  Truco,
+  poker:  Poker,
+  juego3: Juego3,
+  juego4: Juego4,
+  juego5: Juego5,
+  juego6: Juego6,
+  dados:  Dados,
+  sorteo: Sorteo,
 }
 
 function JuegosSection({
@@ -64,7 +47,8 @@ function JuegosSection({
   onBack: () => void
 }) {
   if (activeJuego) {
-    return <GameScorer gameId={activeJuego} onBack={onBack} />
+    const GameComponent = GAME_COMPONENTS[activeJuego]
+    return <GameComponent onBack={onBack} />
   }
   return (
     <div className="juegos-section">
