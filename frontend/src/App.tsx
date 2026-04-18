@@ -19,14 +19,14 @@ type Screen = 'landing' | 'main'
 type Tab = 'juegos' | 'carta'
 
 const JUEGOS = [
-  { id: 'truco', label: 'Truco', emoji: '🃏' },
-  { id: 'poker', label: 'Poker', emoji: '♠️' },
-  { id: 'juego3', label: 'Ajedrez', emoji: '♟️' },
-  { id: 'juego4', label: 'Juego 4', emoji: '🎲' },
-  { id: 'juego5', label: 'Juego 5', emoji: '🎲' },
-  { id: 'juego6', label: 'Juego 6', emoji: '🎲' },
-  { id: 'dados', label: 'Dados', emoji: '🎯' },
-  { id: 'sorteo', label: 'Sorteo', emoji: '🎰' },
+  { id: 'truco',  label: 'Truco',   emoji: '🃏', soon: false },
+  { id: 'poker',  label: 'Poker',   emoji: '♠️', soon: false },
+  { id: 'juego3', label: 'Ajedrez', emoji: '♟️', soon: false },
+  { id: 'juego4', label: 'Juego 4', emoji: '🎲', soon: true  },
+  { id: 'juego5', label: 'Juego 5', emoji: '🎲', soon: true  },
+  { id: 'juego6', label: 'Juego 6', emoji: '🎲', soon: true  },
+  { id: 'dados',  label: 'Dados',   emoji: '🎯', soon: false },
+  { id: 'sorteo', label: 'Sorteo',  emoji: '🎰', soon: true  },
 ]
 
 const GRID_JUEGOS = JUEGOS.slice(0, 6)
@@ -60,17 +60,30 @@ function JuegosSection({
     <div className="juegos-section">
       <div className="juegos-grid">
         {GRID_JUEGOS.map((j) => (
-          <button key={j.id} className="juego-btn" type="button" onClick={() => onSelect(j.id)}>
+          <button
+            key={j.id}
+            className={`juego-btn ${j.soon ? 'soon' : ''}`}
+            type="button"
+            disabled={j.soon}
+            onClick={() => !j.soon && onSelect(j.id)}
+          >
             <span className="juego-emoji">{j.emoji}</span>
             <span className="juego-label">{j.label}</span>
+            {j.soon && <span className="juego-soon-badge">Próximamente</span>}
           </button>
         ))}
       </div>
       <div className="juegos-extra">
         {EXTRA_JUEGOS.map((j) => (
-          <button key={j.id} className="juego-extra-btn" type="button" onClick={() => onSelect(j.id)}>
+          <button
+            key={j.id}
+            className={`juego-extra-btn ${j.soon ? 'soon' : ''}`}
+            type="button"
+            disabled={j.soon}
+            onClick={() => !j.soon && onSelect(j.id)}
+          >
             <span className="juego-extra-emoji">{j.emoji}</span>
-            <span className="juego-extra-label">{j.label}</span>
+            <span className="juego-extra-label">{j.soon ? 'Próximo' : j.label}</span>
           </button>
         ))}
       </div>

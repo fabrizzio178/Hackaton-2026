@@ -255,6 +255,29 @@
   gap: 0.4rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+.juego-btn.soon {
+  opacity: 0.45;
+  cursor: default;
+  filter: brightness(0.7);
+  position: relative;
+}
+
+.juego-soon-badge {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #122b12;
+  background: #f0c040;
+  border-radius: 999px;
+  padding: 0.15rem 0.45rem;
 }
 
 .juego-emoji {
@@ -287,6 +310,12 @@
   gap: 0.2rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+
+.juego-extra-btn.soon {
+  opacity: 0.45;
+  cursor: default;
+  filter: brightness(0.7);
 }
 
 .juego-extra-emoji {
