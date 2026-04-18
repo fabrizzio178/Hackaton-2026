@@ -16,6 +16,7 @@ import CartFab from './components/CartFab/CartFab'
 import CartDrawer from './components/CartDrawer/CartDrawer'
 import { AIChatModal } from './components/AIChatModal'
 import { ActionMenu } from './components/ActionMenu'
+import { RulesModal } from './components/RulesModal'
 
 type Screen = 'landing' | 'main'
 type Tab = 'juegos' | 'carta'
@@ -146,6 +147,49 @@ function MainPage({ initialTab }: { initialTab: Tab }) {
   const [activeJuego, setActiveJuego] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
+  const [rulesOpen, setRulesOpen] = useState(false)
+
+  const REGLAS_CONTENT = `# 📖 Reglas del Bar
+
+## 🃏 Truco Argentino
+
+**Mazo:** Español de 40 cartas (sin 8, 9 ni comodines).
+
+**Objetivo:** Llegar a 15 o 30 puntos ganando el Envido y el Truco en cada mano.
+
+### Jerarquía de cartas
+1 As de Espada · 2 As de Basto · 3 Siete de Espada · 4 Siete de Oro · 5 Tres · 6 Dos · 7 Ases falsos · 8 Reyes · 9 Caballos · 10 Sotas · 11 Sietes falsos · 12 Seis · 13 Cinco · 14 Cuatro
+
+### Envido
+Sumá las dos cartas del mismo palo + 20. Las figuras valen 0. Sin cartas del mismo palo, tomás el valor más alto.
+
+**Cantos:** Envido (2 pts), Real Envido (3 pts), Falta Envido (lo que falte para ganar).
+
+### Truco
+Mejor de 3 rondas. **Truco** (2 pts) → **Retruco** (3 pts) → **Vale 4** (4 pts). Rechazar da los puntos del nivel anterior al rival.
+
+---
+
+## 🎴 Chinchón
+
+**Mazo:** Español de 50 cartas (1 al 12 + 2 comodines).
+
+**Objetivo:** Formar combinaciones y no superar 100 puntos.
+
+### Combinaciones
+- **Escalera:** 3+ cartas consecutivas del mismo palo.
+- **Pierna:** 3-4 cartas del mismo número, distinto palo.
+- El comodín reemplaza cualquier carta.
+
+### Cortar
+Podés cortar cuando tus cartas sueltas suman **5 puntos o menos**.
+
+### Puntuación
+- Cartas sueltas suman puntos en contra (figuras = 10).
+- Cortar sin cartas sueltas: **−10 puntos**.
+- **Chinchón** (escalera de 7 del mismo palo): ganás la partida o −50 pts con comodín.
+- Al llegar a 100 puntos quedás eliminado (o pagás enganche).
+`
   const prevTab = useRef<Tab>(initialTab)
 
   function handleTabChange(tab: Tab) {
@@ -168,9 +212,10 @@ function MainPage({ initialTab }: { initialTab: Tab }) {
       <CartFab onClick={() => setDrawerOpen(true)} />
       <CartDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <ActionMenu
-        onOpenRules={() => {}}
+        onOpenRules={() => setRulesOpen(true)}
         onOpenChat={() => setChatOpen(true)}
       />
+      {rulesOpen && <RulesModal content={REGLAS_CONTENT} onClose={() => setRulesOpen(false)} />}
       {chatOpen && <AIChatModal onClose={() => setChatOpen(false)} />}
       <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
     </div>
