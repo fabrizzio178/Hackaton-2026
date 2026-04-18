@@ -3,6 +3,7 @@ import { ActionMenu } from '../ActionMenu'
 import { RulesModal } from '../RulesModal'
 import { AIChatModal } from '../AIChatModal'
 import '../../App.css'
+import '../games/games.css'
 
 interface BaseScorerProps {
   label: string
