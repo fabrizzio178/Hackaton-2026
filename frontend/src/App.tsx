@@ -13,6 +13,8 @@ import { Sorteo } from './components/games/Sorteo'
 import CartaSection from './components/CartaSection/CartaSection'
 import CartFab from './components/CartFab/CartFab'
 import CartDrawer from './components/CartDrawer/CartDrawer'
+import { AIChatModal } from './components/AIChatModal'
+import { ActionMenu } from './components/ActionMenu'
 
 type Screen = 'landing' | 'main'
 type Tab = 'juegos' | 'carta'
@@ -129,6 +131,7 @@ function MainPage({ initialTab }: { initialTab: Tab }) {
   const [direction, setDirection] = useState<'left' | 'right'>('left')
   const [activeJuego, setActiveJuego] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [chatOpen, setChatOpen] = useState(false)
   const prevTab = useRef<Tab>(initialTab)
 
   function handleTabChange(tab: Tab) {
@@ -150,6 +153,11 @@ function MainPage({ initialTab }: { initialTab: Tab }) {
       />
       <CartFab onClick={() => setDrawerOpen(true)} />
       <CartDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      <ActionMenu
+        onOpenRules={() => {}}
+        onOpenChat={() => setChatOpen(true)}
+      />
+      {chatOpen && <AIChatModal onClose={() => setChatOpen(false)} />}
       <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
     </div>
   )
