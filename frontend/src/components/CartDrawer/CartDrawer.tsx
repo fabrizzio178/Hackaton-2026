@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useCartStore } from '../../store/useCartStore';
 import { formatPrice } from '../../data/menuData';
 import './CartDrawer.css';
@@ -12,9 +12,12 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const items = useCartStore((s) => s.items);
   const addItem = useCartStore((s) => s.addItem);
   const removeItem = useCartStore((s) => s.removeItem);
+  const clearCart = useCartStore((s) => s.clearCart);
   const totalPrice = useCartStore((s) =>
     s.items.reduce((sum, i) => sum + i.menuItem.price * i.quantity, 0)
   );
+
+  const [confirmed, setConfirmed] = useState(false);
 
   const drawerRef = useRef<HTMLDivElement>(null);
   const startY = useRef(0);
@@ -42,15 +45,28 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     const diff = currentY.current - startY.current;
     drawerRef.current.style.transition = '';
     drawerRef.current.style.transform = '';
-    if (diff > 120) {
-      onClose();
-    }
+    if (diff > 120) onClose();
   }, [onClose]);
+
+  function handleConfirm() {
+    clearCart();
+    setConfirmed(true);
+    // Cierra el drawer automáticamente luego de 2.5s
+    setTimeout(() => {
+      setConfirmed(false);
+      onClose();
+    }, 2500);
+  }
+
+  function handleClose() {
+    setConfirmed(false);
+    onClose();
+  }
 
   if (!isOpen) return null;
 
   return (
-    <div className="cart-overlay" onClick={onClose}>
+    <div className="cart-overlay" onClick={handleClose}>
       <div
         ref={drawerRef}
         className="cart-drawer"
@@ -64,66 +80,77 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           <div className="cart-drawer-handle-bar" />
         </div>
 
-        {/* Header */}
-        <div className="cart-drawer-header">
-          <h2 className="cart-drawer-title">Tu Pedido</h2>
-          <button className="cart-drawer-close" type="button" onClick={onClose} aria-label="Cerrar">
-            ✕
-          </button>
-        </div>
-
-        {/* Items list */}
-        <div className="cart-drawer-items">
-          {items.length === 0 ? (
-            <p className="cart-empty">Tu carrito está vacío</p>
-          ) : (
-            items.map((cartItem) => (
-              <div key={cartItem.menuItem.id} className="cart-drawer-item">
-                <div className="cart-drawer-item-photo">
-                  <span className="cart-drawer-item-emoji">{cartItem.menuItem.emoji}</span>
-                </div>
-
-                <div className="cart-drawer-item-info">
-                  <span className="cart-drawer-item-name">{cartItem.menuItem.name}</span>
-                  <span className="cart-drawer-item-subtotal">
-                    {formatPrice(cartItem.menuItem.price)} × {cartItem.quantity} ={' '}
-                    {formatPrice(cartItem.menuItem.price * cartItem.quantity)}
-                  </span>
-                </div>
-
-                <div className="cart-drawer-item-controls">
-                  <button
-                    className="qty-btn qty-minus"
-                    type="button"
-                    onClick={() => removeItem(cartItem.menuItem.id)}
-                  >
-                    −
-                  </button>
-                  <span className="qty-value">{cartItem.quantity}</span>
-                  <button
-                    className="qty-btn qty-plus"
-                    type="button"
-                    onClick={() => addItem(cartItem.menuItem)}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-
-        {/* Footer */}
-        {items.length > 0 && (
-          <div className="cart-drawer-footer">
-            <div className="cart-drawer-total">
-              <span className="cart-drawer-total-label">Total</span>
-              <span className="cart-drawer-total-price">{formatPrice(totalPrice)}</span>
-            </div>
-            <button className="cart-confirm-btn" type="button">
-              Confirmar Pedido
-            </button>
+        {/* ── ESTADO DE CONFIRMACIÓN ── */}
+        {confirmed ? (
+          <div className="cart-confirmed">
+            <div className="cart-confirmed-icon">🎉</div>
+            <h2 className="cart-confirmed-title">¡Tu pedido ya está solicitado!</h2>
+            <p className="cart-confirmed-sub">El mozo lo estará llevando a tu mesa enseguida.</p>
           </div>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="cart-drawer-header">
+              <h2 className="cart-drawer-title">Tu Pedido</h2>
+              <button className="cart-drawer-close" type="button" onClick={handleClose} aria-label="Cerrar">
+                ✕
+              </button>
+            </div>
+
+            {/* Items list */}
+            <div className="cart-drawer-items">
+              {items.length === 0 ? (
+                <p className="cart-empty">Tu carrito está vacío</p>
+              ) : (
+                items.map((cartItem) => (
+                  <div key={cartItem.menuItem.id} className="cart-drawer-item">
+                    <div className="cart-drawer-item-photo">
+                      <span className="cart-drawer-item-emoji">{cartItem.menuItem.emoji}</span>
+                    </div>
+
+                    <div className="cart-drawer-item-info">
+                      <span className="cart-drawer-item-name">{cartItem.menuItem.name}</span>
+                      <span className="cart-drawer-item-subtotal">
+                        {formatPrice(cartItem.menuItem.price)} × {cartItem.quantity} ={' '}
+                        {formatPrice(cartItem.menuItem.price * cartItem.quantity)}
+                      </span>
+                    </div>
+
+                    <div className="cart-drawer-item-controls">
+                      <button
+                        className="qty-btn qty-minus"
+                        type="button"
+                        onClick={() => removeItem(cartItem.menuItem.id)}
+                      >
+                        −
+                      </button>
+                      <span className="qty-value">{cartItem.quantity}</span>
+                      <button
+                        className="qty-btn qty-plus"
+                        type="button"
+                        onClick={() => addItem(cartItem.menuItem)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Footer */}
+            {items.length > 0 && (
+              <div className="cart-drawer-footer">
+                <div className="cart-drawer-total">
+                  <span className="cart-drawer-total-label">Total</span>
+                  <span className="cart-drawer-total-price">{formatPrice(totalPrice)}</span>
+                </div>
+                <button className="cart-confirm-btn" type="button" onClick={handleConfirm}>
+                  Confirmar Pedido
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
