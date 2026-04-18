@@ -1,24 +1,22 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/database';
 
-export interface MozoAttributes {
-  id?: string;
+export interface JuegoAttributes {
+  idJuego?: string;
   nombre: string;
-  apellido: string;
 }
 
-export class Mozo extends Model<MozoAttributes> implements MozoAttributes {
-  public id!: string;
+export class Juego extends Model<JuegoAttributes> implements JuegoAttributes {
+  public idJuego!: string;
   public nombre!: string;
-  public apellido!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-Mozo.init(
+Juego.init(
   {
-    id: {
+    idJuego: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -27,15 +25,11 @@ Mozo.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    apellido: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
   },
   {
     sequelize,
-    modelName: 'Mozo',
-    tableName: 'mozos',
+    modelName: 'Juego',
+    tableName: 'juegos',
     timestamps: true,
   }
 );
