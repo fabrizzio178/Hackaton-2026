@@ -1,33 +1,26 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../config/database';
-import { Categoria } from './Categoria';
 
-export interface JuegoAttributes {
+export interface CategoriaAttributes {
   id: string;
   nombre: string;
   descripcion?: string;
-  min_jugadores: number;
-  max_jugadores: number;
-  categoria_id?: string;
 }
 
-export type JuegoCreationAttributes = Optional<JuegoAttributes, 'id'>;
+export type CategoriaCreationAttributes = Optional<CategoriaAttributes, 'id'>;
 
-export class Juego extends Model<JuegoAttributes, JuegoCreationAttributes> implements JuegoAttributes {
-  public idJuego!: string;
+export class Categoria extends Model<CategoriaAttributes, CategoriaCreationAttributes> implements CategoriaAttributes {
+  public id!: string;
   public nombre!: string;
   public descripcion!: string;
-  public min_jugadores!: number;
-  public max_jugadores!: number;
-  public categoria_id!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-Juego.init(
+Categoria.init(
   {
-    idJuego: {
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -35,12 +28,17 @@ Juego.init(
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
+    },
+    descripcion: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
   },
   {
     sequelize,
-    modelName: 'Juego',
-    tableName: 'juegos',
+    modelName: 'Categoria',
+    tableName: 'categorias',
     timestamps: true,
   }
 );
