@@ -1,43 +1,51 @@
 import { Request, Response } from 'express';
 import { streamText } from 'ai';
-import { anthropic } from '@ai-sdk/anthropic';
+import { google } from '@ai-sdk/google';
 import reglasDB from '../data/reglas.json';
 
 export class AiController {
-  public async postChat(req: Request, res: Response) {
+  public async postChat(req: Request, res: Response): Promise<void> {
     try {
       const { messages } = req.body;
 
-      // Convertimos el JSON a texto para que Claude lo lea
+      if (!messages || !Array.isArray(messages)) {
+        res.status(400).json({ error: 'El historial de mensajes es inválido o no fue provisto.' });
+        return;
+      }
+
+      // Convertimos el JSON a texto para que Gemini lo lea en el prompt
       const reglasTexto = JSON.stringify(reglasDB);
 
       const systemPrompt = `
-        Eres el "Mozo Virtual" del bar MeepleTab. 
-        Tu trabajo EXCLUSIVO es responder dudas sobre las reglas de los juegos de mesa que tenemos en el local.
+        Sos el "Mozo Virtual" oficial del bar lúdico "MeepleTab". Tu trabajo EXCLUSIVO es responder dudas sobre las reglas de los juegos de mesa que tenemos disponibles en el local.
         
-        Aquí tienes el manual de reglas oficial del bar:
+        INSTRUCCIONES DE PERSONALIDAD:
+        1. Usá un tono amable, servicial y coloquial argentino (usá palabras como "che", "mirá", "maestro", "fiera", "capo", "dale").
+        2. Sé breve y conciso, estás atendiendo una mesa y tenés que responder rápido y claro.
+        
+        Aquí tenés el manual de reglas oficial del bar, que incluye los únicos juegos que ofrecemos por ahora:
         <manual>
         ${reglasTexto}
         </manual>
 
-        INSTRUCCIONES:
-        1. Responde de forma amable, corta y con acento argentino.
-        2. Si te preguntan algo del Truco o el Chinchón, usa la información del <manual>.
-        3. Si te preguntan por un juego que NO está en el manual (ej: Catan, Monopoly), debes pedir disculpas y decir que por ahora solo tienen el Truco y el Chinchón disponibles.
-        4. NO inventes reglas. Basate solo en el texto provisto.
+        INSTRUCCIONES DE REGLAS:
+        1. Si te preguntan sobre cómo jugar o puntuar en el Truco o el Chinchón, usá EXCLUSIVAMENTE la información del <manual>. No inventes reglas que no estén ahí.
+        2. Si te preguntan por un juego que NO está en el manual (ej: Catan, Monopoly, T.E.G., etc.), pedí disculpas amablemente y aclarales que por el momento en MeepleTab solo tienen disponibles el Truco y el Chinchón. No les expliques cómo se juegan esos otros juegos, solo redirigilos a los que tenemos.
+        3. Nunca salgas de tu personaje de Mozo Virtual del bar MeepleTab.
       `;
 
+      // Llamada a la API de Gemini 2.5 Flash
       const result = streamText({
-        model: anthropic('claude-3-5-haiku-20241022'),
+        model: google('gemini-2.5-flash'),
         system: systemPrompt,
         messages,
       });
 
-      // ESTA ES LA LÍNEA QUE CAMBIA 👇
+      // Transmite la respuesta en forma de chunks al frontend (útil para useChat)
       result.pipeTextStreamToResponse(res);
-      
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      console.error('Error en el endpoint de AI:', error);
+      res.status(500).json({ error: 'Hubo un error al procesar tu solicitud con el Mozo Virtual.' });
     }
   }
 }
