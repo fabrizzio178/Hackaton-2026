@@ -1,0 +1,173 @@
+/* ── Carta Section ── */
+.carta-section {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem 1rem 0;
+}
+
+.carta-section::-webkit-scrollbar {
+  width: 4px;
+}
+.carta-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+.carta-section::-webkit-scrollbar-thumb {
+  background: rgba(240, 192, 64, 0.25);
+  border-radius: 4px;
+}
+
+/* ── Category ── */
+.carta-category {
+  margin-bottom: 1.25rem;
+}
+
+.carta-category-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.25rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(240, 192, 64, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: linear-gradient(180deg, #122b12 80%, transparent);
+}
+
+.carta-category-emoji {
+  font-size: 1.25rem;
+}
+
+.carta-category-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f0c040;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 12px rgba(240, 192, 64, 0.35);
+}
+
+/* ── Item Card ── */
+.carta-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.carta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(240, 192, 64, 0.2);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carta-item:active {
+  border-color: rgba(240, 192, 64, 0.5);
+  box-shadow: 0 0 12px rgba(240, 192, 64, 0.1);
+}
+
+/* Photo placeholder */
+.carta-item-photo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #1a1a2e, #0f3460);
+  border: 1px solid rgba(240, 192, 64, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carta-item-emoji {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+
+/* Info */
+.carta-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.carta-item-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #e8d5a3;
+  line-height: 1.2;
+}
+
+.carta-item-desc {
+  font-size: 0.7rem;
+  color: rgba(232, 213, 163, 0.5);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.carta-item-price {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f0c040;
+  text-shadow: 0 0 8px rgba(240, 192, 64, 0.25);
+}
+
+/* ── Quantity Controls ── */
+.carta-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.qty-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(240, 192, 64, 0.6);
+  background: rgba(0, 0, 0, 0.4);
+  color: #f0c040;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  line-height: 1;
+}
+
+.qty-btn:active {
+  transform: scale(0.9);
+  background: rgba(240, 192, 64, 0.2);
+  box-shadow: 0 0 10px rgba(240, 192, 64, 0.3);
+}
+
+.qty-plus {
+  background: rgba(240, 192, 64, 0.15);
+}
+
+.qty-value {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f0c040;
+  min-width: 22px;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(240, 192, 64, 0.4);
+}
