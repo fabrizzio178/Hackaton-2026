@@ -4,10 +4,32 @@ import './App.css'
 type Screen = 'landing' | 'main'
 type Tab = 'juegos' | 'carta'
 
+const JUEGOS = [
+  { id: 'truco',  label: 'Truco',   emoji: '🃏' },
+  { id: 'poker',  label: 'Poker',   emoji: '♠️' },
+  { id: 'juego3', label: 'Juego 3', emoji: '🎲' },
+  { id: 'juego4', label: 'Juego 4', emoji: '🎲' },
+  { id: 'juego5', label: 'Juego 5', emoji: '🎲' },
+  { id: 'juego6', label: 'Juego 6', emoji: '🎲' },
+]
+
+function JuegosSection() {
+  return (
+    <div className="juegos-grid">
+      {JUEGOS.map((j) => (
+        <button key={j.id} className="juego-btn" type="button">
+          <span className="juego-emoji">{j.emoji}</span>
+          <span className="juego-label">{j.label}</span>
+        </button>
+      ))}
+    </div>
+  )
+}
+
 function TabContent({ tab, direction }: { tab: Tab; direction: 'left' | 'right' }) {
   return (
     <div className={`tab-content slide-${direction}`}>
-      <p className="tab-placeholder">{tab === 'juegos' ? 'Juegos' : 'Carta'}</p>
+      {tab === 'juegos' ? <JuegosSection /> : <p className="tab-placeholder">Carta</p>}
     </div>
   )
 }
