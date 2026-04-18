@@ -1,5 +1,8 @@
 import { useState, useRef } from 'react'
 import './App.css'
+import { ActionMenu } from './components/ActionMenu'
+import { RulesModal } from './components/RulesModal'
+import { AIChatModal } from './components/AIChatModal'
 
 type Screen = 'landing' | 'main'
 type Tab = 'juegos' | 'carta'
@@ -20,15 +23,33 @@ const EXTRA_JUEGOS = JUEGOS.slice(6)
 
 function GameScorer({ gameId, onBack }: { gameId: string; onBack: () => void }) {
   const juego = JUEGOS.find(j => j.id === gameId)!
+  const [modal, setModal] = useState<'rules' | 'chat' | null>(null)
+
   return (
     <div className="scorer-view">
-      <button className="scorer-back-btn" onClick={onBack} type="button">
-        ←
-      </button>
+      <button className="scorer-back-btn" onClick={onBack} type="button">←</button>
+
       <div className="scorer-title">
         <span className="scorer-emoji">{juego.emoji}</span>
         <h2 className="scorer-name">{juego.label}</h2>
       </div>
+
+      <div className="scorer-action-menu">
+        <ActionMenu
+          onOpenRules={() => setModal('rules')}
+          onOpenChat={() => setModal('chat')}
+        />
+      </div>
+
+      {modal === 'rules' && (
+        <RulesModal
+          content={`# Reglas de ${juego.label}\n\n(placeholder — reemplazar con el archivo .md correspondiente)`}
+          onClose={() => setModal(null)}
+        />
+      )}
+      {modal === 'chat' && (
+        <AIChatModal onClose={() => setModal(null)} />
+      )}
     </div>
   )
 }
