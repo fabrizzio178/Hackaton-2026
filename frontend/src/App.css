@@ -329,6 +329,13 @@
   position: relative;
 }
 
+.scorer-view.scorer-full-height {
+  padding: 0;
+  gap: 0;
+  flex: 1;
+  min-height: 0;
+}
+
 .scorer-back-btn {
   position: fixed;
   top: 1rem;

@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import './App.css'
 import { Truco } from './components/games/Truco'
 import { Poker } from './components/games/Poker'
-import { Juego3 } from './components/games/Juego3'
+import { Ajedrez } from './components/games/Ajedrez'
 import { Juego4 } from './components/games/Juego4'
 import { Juego5 } from './components/games/Juego5'
 import { Juego6 } from './components/games/Juego6'
@@ -18,7 +18,7 @@ type Tab = 'juegos' | 'carta'
 const JUEGOS = [
   { id: 'truco',  label: 'Truco',   emoji: '🃏' },
   { id: 'poker',  label: 'Poker',   emoji: '♠️' },
-  { id: 'juego3', label: 'Juego 3', emoji: '🎲' },
+  { id: 'juego3', label: 'Ajedrez', emoji: '♟️' },
   { id: 'juego4', label: 'Juego 4', emoji: '🎲' },
   { id: 'juego5', label: 'Juego 5', emoji: '🎲' },
   { id: 'juego6', label: 'Juego 6', emoji: '🎲' },
@@ -32,7 +32,7 @@ const EXTRA_JUEGOS = JUEGOS.slice(6)
 const GAME_COMPONENTS: Record<string, React.ComponentType<{ onBack: () => void }>> = {
   truco:  Truco,
   poker:  Poker,
-  juego3: Juego3,
+  juego3: Ajedrez,
   juego4: Juego4,
   juego5: Juego5,
   juego6: Juego6,

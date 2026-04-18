@@ -10,13 +10,15 @@ interface BaseScorerProps {
   rulesContent: string
   onBack: () => void
   children?: React.ReactNode
+  showTitle?: boolean
+  fullHeight?: boolean
 }
 
-export function BaseScorer({ label, emoji, rulesContent, onBack, children }: BaseScorerProps) {
+export function BaseScorer({ label, emoji, rulesContent, onBack, children, showTitle = true, fullHeight = false }: BaseScorerProps) {
   const [modal, setModal] = useState<'rules' | 'chat' | null>(null)
 
   return (
-    <div className="scorer-view">
+    <div className={`scorer-view${fullHeight ? ' scorer-full-height' : ''}`}>
       <button className="scorer-back-btn" onClick={onBack} type="button">←</button>
 
       <ActionMenu
@@ -24,10 +26,12 @@ export function BaseScorer({ label, emoji, rulesContent, onBack, children }: Bas
         onOpenChat={() => setModal('chat')}
       />
 
-      <div className="scorer-title">
-        <span className="scorer-emoji">{emoji}</span>
-        <h2 className="scorer-name">{label}</h2>
-      </div>
+      {showTitle && (
+        <div className="scorer-title">
+          <span className="scorer-emoji">{emoji}</span>
+          <h2 className="scorer-name">{label}</h2>
+        </div>
+      )}
 
       {children}
 
