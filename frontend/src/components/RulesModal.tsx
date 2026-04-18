@@ -1,3 +1,4 @@
+import ReactMarkdown from 'react-markdown'
 import './Modal.css'
 
 interface RulesModalProps {
@@ -11,7 +12,9 @@ export function RulesModal({ content, onClose }: RulesModalProps) {
       <div className="modal-sheet" onClick={e => e.stopPropagation()}>
         <button className="modal-close-btn" onClick={onClose} type="button">✕</button>
         <div className="modal-body rules-body">
-          <pre className="rules-content">{content}</pre>
+          <div className="rules-md">
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </div>
         </div>
       </div>
     </div>

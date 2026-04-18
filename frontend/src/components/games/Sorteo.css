@@ -1,0 +1,175 @@
+.sorteo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1.25rem;
+  padding: 0 1rem;
+}
+
+.sorteo-input-row {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 360px;
+}
+
+.sorteo-input {
+  flex: 1;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  color: #e8d5a3;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1.5px solid rgba(240, 192, 64, 0.4);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  outline: none;
+  min-height: 44px;
+}
+
+.sorteo-input:focus {
+  border-color: #f0c040;
+  box-shadow: 0 0 0 2px rgba(240, 192, 64, 0.2);
+}
+
+.sorteo-input::placeholder {
+  color: rgba(232, 213, 163, 0.4);
+}
+
+.sorteo-add-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: 2px solid rgba(240, 192, 64, 0.6);
+  background: rgba(240, 192, 64, 0.1);
+  color: #f0c040;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+
+.sorteo-add-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.sorteo-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 360px;
+  justify-content: center;
+}
+
+.sorteo-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.9rem;
+  color: #e8d5a3;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1.5px solid rgba(240, 192, 64, 0.35);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.sorteo-chip.chip-winner {
+  background: rgba(240, 192, 64, 0.2);
+  border-color: #f0c040;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(240, 192, 64, 0.4);
+}
+
+.sorteo-chip-remove {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(240, 192, 64, 0.2);
+  color: #f0c040;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sorteo-winner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1rem 2rem;
+  border: 2px solid #f0c040;
+  border-radius: 14px;
+  background: rgba(240, 192, 64, 0.12);
+  box-shadow: 0 0 24px rgba(240, 192, 64, 0.35);
+}
+
+.sorteo-winner-label {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.7);
+}
+
+.sorteo-winner-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f0c040;
+  text-shadow: 0 0 16px rgba(240, 192, 64, 0.6);
+  letter-spacing: 0.04em;
+}
+
+.sorteo-actions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 360px;
+  justify-content: center;
+}
+
+.sorteo-btn {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 8px;
+  padding: 0.75rem 1.75rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  font-size: 0.9rem;
+}
+
+.sorteo-btn.primary {
+  color: #122b12;
+  background: #f0c040;
+  border: none;
+  box-shadow: 0 4px 14px rgba(240, 192, 64, 0.35);
+}
+
+.sorteo-btn.primary:disabled {
+  opacity: 0.4;
+  cursor: default;
+  box-shadow: none;
+}
+
+.sorteo-btn.secondary {
+  color: #f0c040;
+  background: transparent;
+  border: 2px solid rgba(240, 192, 64, 0.5);
+}

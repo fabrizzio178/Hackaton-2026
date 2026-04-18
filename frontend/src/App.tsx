@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react'
 import './App.css'
+import imgJuegos from './assets/Juego.png'
+import imgCarta from './assets/Carta.png'
 import { Truco } from './components/games/Truco'
 import { Poker } from './components/games/Poker'
 import { Ajedrez } from './components/games/Ajedrez'
@@ -16,27 +18,27 @@ type Screen = 'landing' | 'main'
 type Tab = 'juegos' | 'carta'
 
 const JUEGOS = [
-  { id: 'truco',  label: 'Truco',   emoji: '🃏' },
-  { id: 'poker',  label: 'Poker',   emoji: '♠️' },
+  { id: 'truco', label: 'Truco', emoji: '🃏' },
+  { id: 'poker', label: 'Poker', emoji: '♠️' },
   { id: 'juego3', label: 'Ajedrez', emoji: '♟️' },
   { id: 'juego4', label: 'Juego 4', emoji: '🎲' },
   { id: 'juego5', label: 'Juego 5', emoji: '🎲' },
   { id: 'juego6', label: 'Juego 6', emoji: '🎲' },
-  { id: 'dados',  label: 'Dados',   emoji: '🎯' },
-  { id: 'sorteo', label: 'Sorteo',  emoji: '🎰' },
+  { id: 'dados', label: 'Dados', emoji: '🎯' },
+  { id: 'sorteo', label: 'Sorteo', emoji: '🎰' },
 ]
 
 const GRID_JUEGOS = JUEGOS.slice(0, 6)
 const EXTRA_JUEGOS = JUEGOS.slice(6)
 
 const GAME_COMPONENTS: Record<string, React.ComponentType<{ onBack: () => void }>> = {
-  truco:  Truco,
-  poker:  Poker,
+  truco: Truco,
+  poker: Poker,
   juego3: Ajedrez,
   juego4: Juego4,
   juego5: Juego5,
   juego6: Juego6,
-  dados:  Dados,
+  dados: Dados,
   sorteo: Sorteo,
 }
 
@@ -159,21 +161,21 @@ function LandingPage({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       <header className="app-header">
         <h1 className="title">
           Bienvenido a<br />
-          <span className="bar-name">[Nombre del Bar]</span>
+          <span className="bar-name">Barcatón</span>
         </h1>
-        <div className="mesa-badge">Mesa X</div>
+        <div className="mesa-badge">Mesa 10</div>
       </header>
 
       <section className="menu-buttons">
         <button className="menu-btn" type="button" onClick={() => onNavigate('juegos')}>
-          <div className="btn-img juegos-img">
-            <span className="btn-emoji">🃏</span>
+          <div className="btn-img">
+            <img src={imgJuegos} alt="Juegos" className="btn-photo" />
           </div>
           <span className="btn-label">Juegos</span>
         </button>
         <button className="menu-btn" type="button" onClick={() => onNavigate('carta')}>
-          <div className="btn-img carta-img">
-            <span className="btn-emoji">🍹</span>
+          <div className="btn-img">
+            <img src={imgCarta} alt="Carta" className="btn-photo" />
           </div>
           <span className="btn-label">Carta</span>
         </button>
@@ -186,7 +188,7 @@ function LandingPage({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
           <div className="bartender-photo">
             <span className="bartender-initial">?</span>
           </div>
-          <span className="bartender-name">[Nombre]</span>
+          <span className="bartender-name">Juan Jose Alonso</span>
         </div>
       </footer>
     </main>

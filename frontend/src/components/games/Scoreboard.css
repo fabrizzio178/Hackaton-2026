@@ -1,0 +1,124 @@
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+.scoreboard-row {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.scoreboard-divider {
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(240, 192, 64, 0.4), transparent);
+}
+
+.team-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0.5rem;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+}
+
+.team-col.winner {
+  background: rgba(100, 200, 100, 0.1);
+}
+
+.team-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.8);
+}
+
+.team-col.winner .team-name {
+  color: #88ff88;
+}
+
+.team-score {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #f0c040;
+  text-shadow: 0 0 20px rgba(240, 192, 64, 0.4);
+  min-width: 3ch;
+  text-align: center;
+}
+
+.team-col.winner .team-score {
+  color: #88ff88;
+  text-shadow: 0 0 20px rgba(100, 255, 100, 0.5);
+}
+
+.team-btns {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.team-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(240, 192, 64, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  color: #f0c040;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.team-btn:active {
+  background: rgba(240, 192, 64, 0.15);
+  transform: scale(0.95);
+}
+
+.team-btn.plus {
+  background: rgba(240, 192, 64, 0.12);
+}
+
+.scoreboard-winner {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #88ff88;
+  text-shadow: 0 0 12px rgba(100, 255, 100, 0.4);
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.scoreboard-reset {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #122b12;
+  background: #f0c040;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 2rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 12px rgba(240, 192, 64, 0.3);
+}
