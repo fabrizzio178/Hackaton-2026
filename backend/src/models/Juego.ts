@@ -14,7 +14,7 @@ export interface JuegoAttributes {
 export type JuegoCreationAttributes = Optional<JuegoAttributes, 'id'>;
 
 export class Juego extends Model<JuegoAttributes, JuegoCreationAttributes> implements JuegoAttributes {
-  public id!: string;
+  public idJuego!: string;
   public nombre!: string;
   public descripcion!: string;
   public min_jugadores!: number;
@@ -27,7 +27,7 @@ export class Juego extends Model<JuegoAttributes, JuegoCreationAttributes> imple
 
 Juego.init(
   {
-    id: {
+    idJuego: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -35,27 +35,6 @@ Juego.init(
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    descripcion: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    min_jugadores: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1,
-    },
-    max_jugadores: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    categoria_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: 'categorias',
-        key: 'id',
-      },
     },
   },
   {
