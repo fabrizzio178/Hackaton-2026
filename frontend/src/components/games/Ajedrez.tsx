@@ -2,8 +2,67 @@ import { useState, useEffect, useRef } from 'react'
 import { BaseScorer } from './BaseScorer'
 import './Ajedrez.css'
 
-const RULES = `# Reloj de Ajedrez\n\nCada jugador tiene el mismo tiempo inicial.\nAl tocar tu mitad de la pantalla, pausas tu reloj y activas el del oponente.\nGana quien no se quede sin tiempo.`
+const RULES = `# Reglas Completas del Ajedrez
 
+El ajedrez es un juego de estrategia para dos jugadores que se juega en un tablero cuadriculado. El objetivo final es acorralar al rey del oponente de tal manera que no pueda evitar ser capturado, lo que se conoce como **Jaque Mate**.
+
+---
+
+### 1. El Tablero y la Disposición Inicial
+
+El tablero consta de 64 casillas (32 claras y 32 oscuras) dispuestas en una cuadrícula de 8x8. 
+
+* **Orientación del tablero:** El tablero debe colocarse de modo que cada jugador tenga una **casilla de color claro en su esquina inferior derecha**.
+* **Las piezas:** Cada jugador comienza con 16 piezas: 1 Rey, 1 Reina (Dama), 2 Torres, 2 Alfiles, 2 Caballos y 8 Peones.
+* **Orden en la primera fila:** De izquierda a derecha para las blancas: Torre, Caballo, Alfil, Reina, Rey, Alfil, Caballo, Torre. (La Reina siempre va en la casilla de su propio color).
+* **Las blancas siempre mueven primero.**
+
+---
+
+### 2. El Movimiento de las Piezas
+
+* **El Peón:** * Se mueve hacia adelante una casilla. 
+    * En su primer movimiento, puede avanzar dos casillas.
+    * Captura en diagonal hacia adelante.
+* **El Caballo:** * Se mueve en forma de "L" (dos casillas en una dirección y una en ángulo recto).
+    * Es la única pieza que puede saltar sobre otras.
+* **El Alfil:** * Se mueve en línea recta diagonal cualquier número de casillas.
+* **La Torre:** * Se mueve en línea recta horizontal o vertical cualquier número de casillas.
+* **La Reina (Dama):** * Se mueve en cualquier dirección recta (horizontal, vertical o diagonal).
+* **El Rey:** * Se mueve una sola casilla en cualquier dirección. No puede moverse a una casilla donde quede en jaque.
+
+---
+
+### 3. Movimientos Especiales
+
+#### A. La Coronación (o Promoción)
+Si un peón llega a la octava fila del oponente, debe ser transformado en cualquier otra pieza de su mismo color (Reina, Torre, Alfil o Caballo).
+
+#### B. La Captura "Al Paso" (En Passant)
+Si un peón avanza dos casillas y queda al lado de un peón oponente, el oponente puede capturarlo como si solo hubiera avanzado una casilla. Solo puede hacerse en el turno inmediatamente posterior.
+
+#### C. El Enroque
+Es un movimiento conjunto del Rey y una Torre. El Rey se mueve dos casillas hacia la Torre y la Torre se coloca al otro lado del Rey.
+**Requisitos:** No haber movido el Rey ni la Torre antes, que el camino esté libre y que el Rey no esté en jaque ni pase por una casilla atacada.
+
+---
+
+### 4. Jaque y Jaque Mate
+
+* **Jaque:** Cuando el Rey está bajo ataque directo. El jugador debe salir del jaque inmediatamente.
+* **Jaque Mate:** Cuando el Rey está en jaque y no existe ningún movimiento legal para escapar. El juego termina y el atacante gana.
+
+---
+
+### 5. El Empate (Tablas)
+
+La partida termina en empate si:
+1. **Rey Ahogado:** El jugador no tiene movimientos legales y su Rey NO está en jaque.
+2. **Mutuo Acuerdo:** Ambos jugadores aceptan el empate.
+3. **Repetición:** La misma posición ocurre tres veces.
+4. **Regla de los 50 Movimientos:** Pasan 50 jugadas sin capturas ni movimientos de peón.
+5. **Material Insuficiente:** Ningún jugador tiene piezas suficientes para dar mate.
+`
 function msToDigits(ms: number) {
   const totalSec = Math.ceil(ms / 1000)
   const m = Math.floor(totalSec / 60)
