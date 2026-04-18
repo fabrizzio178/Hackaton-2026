@@ -1,0 +1,356 @@
+/* ── Setup ── */
+.poker-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 1.25rem;
+  width: 100%;
+}
+
+.poker-setup-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.poker-setup-label {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.7);
+  margin: 0;
+}
+
+.poker-count-pills {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.poker-pill {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(240, 192, 64, 0.45);
+  background: rgba(0, 0, 0, 0.3);
+  color: #f0c040;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.poker-pill.active {
+  background: rgba(240, 192, 64, 0.18);
+  border-color: #f0c040;
+  box-shadow: 0 0 10px rgba(240, 192, 64, 0.3);
+}
+
+.poker-buyin-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.poker-spin-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(240, 192, 64, 0.4);
+  background: transparent;
+  color: #f0c040;
+  font-size: 0.9rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poker-buyin-val {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f0c040;
+  min-width: 5ch;
+  text-align: center;
+  text-shadow: 0 0 12px rgba(240, 192, 64, 0.35);
+}
+
+.poker-start-btn {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #122b12;
+  background: #f0c040;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 2.5rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 16px rgba(240, 192, 64, 0.4);
+  min-height: 48px;
+}
+
+/* ── Game ── */
+.poker-game {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  overflow-y: auto;
+}
+
+/* Pot card */
+.poker-pot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1.5px solid rgba(240, 192, 64, 0.4);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.9rem 1rem;
+}
+
+.poker-pot-label {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.6);
+  margin: 0;
+}
+
+.poker-pot-amount {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #f0c040;
+  text-shadow: 0 0 16px rgba(240, 192, 64, 0.4);
+  margin: 0;
+  line-height: 1;
+}
+
+.poker-pot-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+.poker-pot-btn {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f0c040;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1.5px solid rgba(240, 192, 64, 0.35);
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 32px;
+}
+
+.poker-pot-btn:active {
+  background: rgba(240, 192, 64, 0.12);
+}
+
+/* Step selector */
+.poker-step-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.poker-step-label {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(232, 213, 163, 0.5);
+  white-space: nowrap;
+}
+
+.poker-step-pills {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.poker-step-pill {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f0c040;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1.5px solid rgba(240, 192, 64, 0.35);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, border-color 0.15s;
+  min-height: 32px;
+}
+
+.poker-step-pill.active {
+  background: rgba(240, 192, 64, 0.18);
+  border-color: #f0c040;
+}
+
+/* Players list */
+.poker-players {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.poker-player-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1.5px solid rgba(240, 192, 64, 0.25);
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  transition: opacity 0.2s;
+}
+
+.poker-player-row.broke {
+  opacity: 0.45;
+}
+
+.poker-dealer-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: transparent;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.poker-dealer-badge.visible {
+  background: #f0c040;
+  border-color: #f0c040;
+  color: #122b12;
+  box-shadow: 0 0 8px rgba(240, 192, 64, 0.5);
+}
+
+.poker-player-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(232, 213, 163, 0.85);
+  min-width: 2ch;
+}
+
+.poker-chip-count {
+  flex: 1;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f0c040;
+  text-align: right;
+  text-shadow: 0 0 10px rgba(240, 192, 64, 0.3);
+}
+
+.poker-chip-count.zero {
+  font-size: 0.75rem;
+  color: rgba(200, 80, 80, 0.8);
+  text-shadow: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.poker-player-btns {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.poker-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(240, 192, 64, 0.4);
+  background: rgba(0, 0, 0, 0.25);
+  color: #f0c040;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, transform 0.1s;
+}
+
+.poker-btn.plus {
+  background: rgba(240, 192, 64, 0.1);
+}
+
+.poker-btn:active {
+  transform: scale(0.93);
+  background: rgba(240, 192, 64, 0.18);
+}
+
+.poker-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* Actions */
+.poker-actions {
+  display: flex;
+  gap: 0.6rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
+}
+
+.poker-action-btn {
+  flex: 1;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: 8px;
+  padding: 0.7rem 0.5rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+}
+
+.poker-action-btn.primary {
+  color: #122b12;
+  background: #f0c040;
+  border: none;
+  box-shadow: 0 4px 12px rgba(240, 192, 64, 0.3);
+}
+
+.poker-action-btn.secondary {
+  color: #f0c040;
+  background: transparent;
+  border: 2px solid rgba(240, 192, 64, 0.4);
+}

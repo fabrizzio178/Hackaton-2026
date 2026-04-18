@@ -88,3 +88,50 @@
 .action-arrow.rotated {
   transform: rotate(180deg);
 }
+
+/* Toast */
+.action-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10, 20, 10, 0.92);
+  border: 2px solid #f0c040;
+  border-radius: 14px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f0c040;
+  text-shadow: 0 0 10px rgba(240, 192, 64, 0.4);
+  letter-spacing: 0.04em;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(240, 192, 64, 0.15);
+  z-index: 300;
+  animation: toast-in 0.2s ease-out;
+}
+
+.action-toast-close {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #122b12;
+  background: #f0c040;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.92); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}

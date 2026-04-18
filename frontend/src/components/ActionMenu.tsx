@@ -8,38 +8,65 @@ interface ActionMenuProps {
 
 export function ActionMenu({ onOpenRules, onOpenChat }: ActionMenuProps) {
   const [open, setOpen] = useState(false)
+  const [toast, setToast] = useState(false)
+
+  function pedirJuego() {
+    setOpen(false)
+    setToast(true)
+    setTimeout(() => setToast(false), 2500)
+  }
 
   return (
-    <div className="action-menu">
-      <button
-        className="action-main-btn"
-        type="button"
-        onClick={() => setOpen(o => !o)}
-        aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-      >
-        <span className={`action-arrow ${open ? 'rotated' : ''}`}>▼</span>
-      </button>
+    <>
+      <div className="action-menu">
+        <button
+          className="action-main-btn"
+          type="button"
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+        >
+          <span className={`action-arrow ${open ? 'rotated' : ''}`}>▼</span>
+        </button>
 
-      <div className={`action-menu-items ${open ? 'open' : ''}`}>
-        <button
-          className="action-item-btn"
-          type="button"
-          onClick={() => { setOpen(false); onOpenRules() }}
-          aria-label="Reglas"
-        >
-          <span className="action-item-emoji">📖</span>
-          <span className="action-item-label">Reglas</span>
-        </button>
-        <button
-          className="action-item-btn"
-          type="button"
-          onClick={() => { setOpen(false); onOpenChat() }}
-          aria-label="Chat IA"
-        >
-          <span className="action-item-emoji">🤖</span>
-          <span className="action-item-label">IA</span>
-        </button>
+        <div className={`action-menu-items ${open ? 'open' : ''}`}>
+          <button
+            className="action-item-btn"
+            type="button"
+            onClick={() => { setOpen(false); onOpenRules() }}
+            aria-label="Reglas"
+          >
+            <span className="action-item-emoji">📖</span>
+            <span className="action-item-label">Reglas</span>
+          </button>
+          <button
+            className="action-item-btn"
+            type="button"
+            onClick={() => { setOpen(false); onOpenChat() }}
+            aria-label="Chat IA"
+          >
+            <span className="action-item-emoji">🤖</span>
+            <span className="action-item-label">IA</span>
+          </button>
+          <button
+            className="action-item-btn"
+            type="button"
+            onClick={pedirJuego}
+            aria-label="Pedir juego"
+          >
+            <span className="action-item-emoji">🎮</span>
+            <span className="action-item-label">Pedir</span>
+          </button>
+        </div>
       </div>
-    </div>
+
+      {toast && (
+        <div className="action-toast">
+          <span>🎮 ¡Juego pedido!</span>
+          <button className="action-toast-close" type="button" onClick={() => setToast(false)}>
+            Cerrar
+          </button>
+        </div>
+      )}
+    </>
   )
 }

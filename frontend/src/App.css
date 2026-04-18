@@ -154,20 +154,12 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
   border: 2px solid rgba(240, 192, 64, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   box-shadow: 0 0 12px rgba(240, 192, 64, 0.2);
   flex-shrink: 0;
-}
-
-.bartender-initial {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.3rem;
-  color: #f0c040;
-  opacity: 0.6;
+  background-size: cover;
+  background-position: center center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .bartender-name {
@@ -263,6 +255,29 @@
   gap: 0.4rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+.juego-btn.soon {
+  opacity: 0.45;
+  cursor: default;
+  filter: brightness(0.7);
+  position: relative;
+}
+
+.juego-soon-badge {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #122b12;
+  background: #f0c040;
+  border-radius: 999px;
+  padding: 0.15rem 0.45rem;
 }
 
 .juego-emoji {
@@ -295,6 +310,12 @@
   gap: 0.2rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+
+.juego-extra-btn.soon {
+  opacity: 0.45;
+  cursor: default;
+  filter: brightness(0.7);
 }
 
 .juego-extra-emoji {
