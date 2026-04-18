@@ -11,7 +11,12 @@ const JUEGOS = [
   { id: 'juego4', label: 'Juego 4', emoji: '🎲' },
   { id: 'juego5', label: 'Juego 5', emoji: '🎲' },
   { id: 'juego6', label: 'Juego 6', emoji: '🎲' },
+  { id: 'dados',  label: 'Dados',   emoji: '🎯' },
+  { id: 'sorteo', label: 'Sorteo',  emoji: '🎰' },
 ]
+
+const GRID_JUEGOS = JUEGOS.slice(0, 6)
+const EXTRA_JUEGOS = JUEGOS.slice(6)
 
 function GameScorer({ gameId, onBack }: { gameId: string; onBack: () => void }) {
   const juego = JUEGOS.find(j => j.id === gameId)!
@@ -41,13 +46,23 @@ function JuegosSection({
     return <GameScorer gameId={activeJuego} onBack={onBack} />
   }
   return (
-    <div className="juegos-grid">
-      {JUEGOS.map((j) => (
-        <button key={j.id} className="juego-btn" type="button" onClick={() => onSelect(j.id)}>
-          <span className="juego-emoji">{j.emoji}</span>
-          <span className="juego-label">{j.label}</span>
-        </button>
-      ))}
+    <div className="juegos-section">
+      <div className="juegos-grid">
+        {GRID_JUEGOS.map((j) => (
+          <button key={j.id} className="juego-btn" type="button" onClick={() => onSelect(j.id)}>
+            <span className="juego-emoji">{j.emoji}</span>
+            <span className="juego-label">{j.label}</span>
+          </button>
+        ))}
+      </div>
+      <div className="juegos-extra">
+        {EXTRA_JUEGOS.map((j) => (
+          <button key={j.id} className="juego-extra-btn" type="button" onClick={() => onSelect(j.id)}>
+            <span className="juego-extra-emoji">{j.emoji}</span>
+            <span className="juego-extra-label">{j.label}</span>
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
