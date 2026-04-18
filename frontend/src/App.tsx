@@ -8,6 +8,9 @@ import { Juego5 } from './components/games/Juego5'
 import { Juego6 } from './components/games/Juego6'
 import { Dados } from './components/games/Dados'
 import { Sorteo } from './components/games/Sorteo'
+import CartaSection from './components/CartaSection/CartaSection'
+import CartFab from './components/CartFab/CartFab'
+import CartDrawer from './components/CartDrawer/CartDrawer'
 
 type Screen = 'landing' | 'main'
 type Tab = 'juegos' | 'carta'
@@ -90,7 +93,7 @@ function TabContent({
       {tab === 'juegos' ? (
         <JuegosSection activeJuego={activeJuego} onSelect={onSelectJuego} onBack={onBackJuego} />
       ) : (
-        <p className="tab-placeholder">Carta</p>
+        <CartaSection />
       )}
     </div>
   )
@@ -123,6 +126,7 @@ function MainPage({ initialTab }: { initialTab: Tab }) {
   const [activeTab, setActiveTab] = useState<Tab>(initialTab)
   const [direction, setDirection] = useState<'left' | 'right'>('left')
   const [activeJuego, setActiveJuego] = useState<string | null>(null)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const prevTab = useRef<Tab>(initialTab)
 
   function handleTabChange(tab: Tab) {
@@ -142,6 +146,8 @@ function MainPage({ initialTab }: { initialTab: Tab }) {
         onSelectJuego={setActiveJuego}
         onBackJuego={() => setActiveJuego(null)}
       />
+      <CartFab onClick={() => setDrawerOpen(true)} />
+      <CartDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
     </div>
   )
