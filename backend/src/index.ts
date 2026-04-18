@@ -29,7 +29,7 @@ const aiRateLimiter = rateLimit({
 // Middlewares
 app.use(cors());
 app.use(express.json());
-app.use('/api', aiRateLimiter);
+app.use('/api/ai', aiRateLimiter);
 
 // Rutas
 app.use('/api/mesas', mesaRoutes);
