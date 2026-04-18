@@ -13,11 +13,37 @@ const JUEGOS = [
   { id: 'juego6', label: 'Juego 6', emoji: '🎲' },
 ]
 
-function JuegosSection() {
+function GameScorer({ gameId, onBack }: { gameId: string; onBack: () => void }) {
+  const juego = JUEGOS.find(j => j.id === gameId)!
+  return (
+    <div className="scorer-view">
+      <button className="scorer-back-btn" onClick={onBack} type="button">
+        ←
+      </button>
+      <div className="scorer-title">
+        <span className="scorer-emoji">{juego.emoji}</span>
+        <h2 className="scorer-name">{juego.label}</h2>
+      </div>
+    </div>
+  )
+}
+
+function JuegosSection({
+  activeJuego,
+  onSelect,
+  onBack,
+}: {
+  activeJuego: string | null
+  onSelect: (id: string) => void
+  onBack: () => void
+}) {
+  if (activeJuego) {
+    return <GameScorer gameId={activeJuego} onBack={onBack} />
+  }
   return (
     <div className="juegos-grid">
       {JUEGOS.map((j) => (
-        <button key={j.id} className="juego-btn" type="button">
+        <button key={j.id} className="juego-btn" type="button" onClick={() => onSelect(j.id)}>
           <span className="juego-emoji">{j.emoji}</span>
           <span className="juego-label">{j.label}</span>
         </button>
@@ -26,10 +52,26 @@ function JuegosSection() {
   )
 }
 
-function TabContent({ tab, direction }: { tab: Tab; direction: 'left' | 'right' }) {
+function TabContent({
+  tab,
+  direction,
+  activeJuego,
+  onSelectJuego,
+  onBackJuego,
+}: {
+  tab: Tab
+  direction: 'left' | 'right'
+  activeJuego: string | null
+  onSelectJuego: (id: string) => void
+  onBackJuego: () => void
+}) {
   return (
     <div className={`tab-content slide-${direction}`}>
-      {tab === 'juegos' ? <JuegosSection /> : <p className="tab-placeholder">Carta</p>}
+      {tab === 'juegos' ? (
+        <JuegosSection activeJuego={activeJuego} onSelect={onSelectJuego} onBack={onBackJuego} />
+      ) : (
+        <p className="tab-placeholder">Carta</p>
+      )}
     </div>
   )
 }
@@ -60,6 +102,7 @@ function BottomNav({ activeTab, onTabChange }: { activeTab: Tab; onTabChange: (t
 function MainPage({ initialTab }: { initialTab: Tab }) {
   const [activeTab, setActiveTab] = useState<Tab>(initialTab)
   const [direction, setDirection] = useState<'left' | 'right'>('left')
+  const [activeJuego, setActiveJuego] = useState<string | null>(null)
   const prevTab = useRef<Tab>(initialTab)
 
   function handleTabChange(tab: Tab) {
@@ -71,7 +114,14 @@ function MainPage({ initialTab }: { initialTab: Tab }) {
 
   return (
     <div className="main-page">
-      <TabContent key={activeTab} tab={activeTab} direction={direction} />
+      <TabContent
+        key={activeTab}
+        tab={activeTab}
+        direction={direction}
+        activeJuego={activeJuego}
+        onSelectJuego={setActiveJuego}
+        onBackJuego={() => setActiveJuego(null)}
+      />
       <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
     </div>
   )

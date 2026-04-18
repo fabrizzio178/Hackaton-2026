@@ -275,6 +275,60 @@
   text-shadow: 0 0 8px rgba(240, 192, 64, 0.4);
 }
 
+/* Scorer View */
+.scorer-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 1.25rem;
+  gap: 2rem;
+  position: relative;
+}
+
+.scorer-back-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(240, 192, 64, 0.5);
+  color: #f0c040;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.scorer-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2.5rem;
+}
+
+.scorer-emoji {
+  font-size: 3.5rem;
+}
+
+.scorer-name {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f0c040;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 20px rgba(240, 192, 64, 0.4);
+  margin: 0;
+}
+
 /* Bottom Nav */
 .bottom-nav {
   position: fixed;
