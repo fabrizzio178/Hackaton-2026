@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import ReactMarkdown from 'react-markdown'
 import './Modal.css'
 
 const API_URL = 'http://localhost:8080/api/ai/chat'
@@ -145,9 +146,22 @@ export function AIChatModal({ onClose }: AIChatModalProps) {
                 <span className="chat-bubble-avatar">🤖</span>
               )}
               <div className={`chat-bubble ${msg.role}`}>
-                {msg.content || (isStreaming && i === messages.length - 1 ? (
-                  <span className="chat-cursor">▌</span>
-                ) : null)}
+                {msg.content ? (
+                  <ReactMarkdown
+                    components={{
+                      p: ({ node, ...props }) => <p style={{ margin: 0, padding: 0 }} {...props} />,
+                      ul: ({ node, ...props }) => <ul style={{ paddingLeft: '1.2rem', margin: '0.2rem 0' }} {...props} />,
+                      ol: ({ node, ...props }) => <ol style={{ paddingLeft: '1.2rem', margin: '0.2rem 0' }} {...props} />,
+                      strong: ({ node, ...props }) => <strong style={{ fontWeight: 700, color: '#ffb347' }} {...props} />,
+                    }}
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
+                ) : (
+                  (isStreaming && i === messages.length - 1) ? (
+                    <span className="chat-cursor">▌</span>
+                  ) : null
+                )}
               </div>
             </div>
           ))}

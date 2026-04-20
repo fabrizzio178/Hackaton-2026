@@ -1,6 +1,8 @@
 import { useCartStore } from '../../store/useCartStore';
-import { menuData, formatPrice } from '../../data/menuData';
+import { useCartaData } from '../../hooks/useApi';
+import { formatPrice } from '../../data/menuData';
 import type { MenuItem } from '../../types/menu';
+import { Skeleton } from '../Skeleton';
 import './CartaSection.css';
 
 function CartaItem({ item }: { item: MenuItem }) {
@@ -51,9 +53,35 @@ function CartaItem({ item }: { item: MenuItem }) {
 }
 
 export default function CartaSection() {
+  const { categories, loading } = useCartaData();
+
+  if (loading) {
+    return (
+      <div className="carta-section">
+        {[1, 2, 3].map(cat => (
+          <div key={cat} className="carta-category" style={{ marginTop: '2rem' }}>
+            <div className="carta-category-header" style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center' }}>
+               <Skeleton type="circle" width={32} height={32} />
+               <Skeleton type="text" width={150} height={24} style={{ marginLeft: '10px' }} />
+            </div>
+            <div className="carta-items">
+               {[1, 2, 3].map(item => (
+                 <Skeleton key={item} type="carta-item" />
+               ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (categories.length === 0) {
+    return <div className="carta-section"><p style={{color: 'white', textAlign: 'center', marginTop: '2rem'}}>No hay productos disponibles.</p></div>
+  }
+
   return (
     <div className="carta-section">
-      {menuData.map((category) => (
+      {categories.map((category) => (
         <div key={category.id} className="carta-category">
           <div className="carta-category-header">
             <span className="carta-category-emoji">{category.emoji}</span>

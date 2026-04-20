@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PedirJuegoModal } from './PedirJuegoModal'
 import './ActionMenu.css'
 
 interface ActionMenuProps {
@@ -8,12 +9,13 @@ interface ActionMenuProps {
 
 export function ActionMenu({ onOpenRules, onOpenChat }: ActionMenuProps) {
   const [open, setOpen] = useState(false)
-  const [toast, setToast] = useState(false)
+  const [pedirOpen, setPedirOpen] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
 
-  function pedirJuego() {
-    setOpen(false)
-    setToast(true)
-    setTimeout(() => setToast(false), 2500)
+  function handleConfirmPedido(gameName: string) {
+    setPedirOpen(false)
+    setToastMessage(`🎮 ¡${gameName} en camino!`)
+    setTimeout(() => setToastMessage(''), 3000)
   }
 
   return (
@@ -50,7 +52,7 @@ export function ActionMenu({ onOpenRules, onOpenChat }: ActionMenuProps) {
           <button
             className="action-item-btn"
             type="button"
-            onClick={pedirJuego}
+            onClick={() => { setOpen(false); setPedirOpen(true); }}
             aria-label="Pedir juego"
           >
             <span className="action-item-emoji">🎮</span>
@@ -59,10 +61,17 @@ export function ActionMenu({ onOpenRules, onOpenChat }: ActionMenuProps) {
         </div>
       </div>
 
-      {toast && (
+      {pedirOpen && (
+        <PedirJuegoModal 
+           onClose={() => setPedirOpen(false)} 
+           onConfirm={handleConfirmPedido} 
+        />
+      )}
+
+      {toastMessage && (
         <div className="action-toast">
-          <span>🎮 ¡Juego pedido!</span>
-          <button className="action-toast-close" type="button" onClick={() => setToast(false)}>
+          <span>{toastMessage}</span>
+          <button className="action-toast-close" type="button" onClick={() => setToastMessage('')}>
             Cerrar
           </button>
         </div>

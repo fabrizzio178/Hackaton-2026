@@ -133,9 +133,12 @@
 
 /* ── AI Chat ── */
 .chat-sheet {
-  max-height: 88dvh;
+  height: 70dvh;
+  max-height: 70dvh;
   display: flex;
   flex-direction: column;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .chat-header {

@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background-color: #121212;
 }
 
 /* El área del reloj rotada 90° */
@@ -16,95 +17,85 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
-/* ── SETUP ── */
-.chess-setup {
+/* ── SETUP MODES ── */
+.chess-setup-modes {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+  gap: 2rem;
   width: 100%;
+  height: 100%;
 }
 
-.chess-setup-label {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1rem;
-  color: rgba(232, 213, 163, 0.7);
+.chess-setup-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  color: #fff;
   margin: 0;
 }
 
-.chess-spinners {
+.chess-preset-grid {
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  gap: 20px;
 }
 
-.chess-colon {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #f0c040;
-  line-height: 1;
-  padding-bottom: 0.5rem;
-}
-
-.digit-spinner {
+.chess-preset-btn {
+  background: rgba(30, 30, 30, 0.9);
+  border: 2px solid #333;
+  border-radius: 16px;
+  width: 130px;
+  height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
-}
-
-.digit-btn {
-  background: transparent;
-  border: 1.5px solid rgba(240, 192, 64, 0.4);
-  border-radius: 6px;
-  color: #f0c040;
-  font-size: 0.9rem;
-  width: 44px;
-  height: 36px;
-  display: flex;
-  align-items: center;
   justify-content: center;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
-.digit-val {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #f0c040;
-  line-height: 1;
-  min-width: 44px;
-  text-align: center;
+.chess-preset-btn:hover {
+  background: #1a1a1a;
+  border-color: #4caf50;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
 }
 
-.chess-start-btn {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: #122b12;
-  background: #f0c040;
-  border: none;
-  border-radius: 8px;
-  padding: 0.7rem 2.5rem;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 4px 16px rgba(240, 192, 64, 0.4);
+.preset-icon {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
 }
 
-/* ── RUNNING / FINISHED ── */
+.preset-time {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.preset-label {
+  font-size: 0.9rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+
+/* ── RUNNING / FINISHED ─ BLACK AND WHITE THEME ── */
 .chess-halves {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   position: relative;
+  background-color: #000;
 }
 
 .chess-half {
@@ -113,56 +104,67 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 1rem;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.2s ease;
-  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
+/* PLAYER 2 (NEGRAS) -> Fondo Oscuro, letras blancas */
+.player2 {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+/* PLAYER 1 (BLANCAS) -> Fondo Blanco, letras oscuras */
+.player1 {
+  background-color: #f5f5f5;
+  color: #111;
+}
 
+/* Active Border / Glow Verde (Brand color) */
 .chess-half.active {
-  background: rgba(240, 192, 64, 0.08);
+  box-shadow: inset 0 0 0 10px #4caf50;
+  z-index: 10;
+}
+.player2.active {
+  background-color: #222;
+}
+.player1.active {
+  background-color: #fff;
 }
 
 .chess-half.inactive {
-  background: rgba(0, 0, 0, 0.2);
+  opacity: 0.6;
 }
 
-.chess-half.winner {
-  background: rgba(100, 200, 100, 0.12);
-}
-
-.chess-half.loser {
-  background: rgba(200, 50, 50, 0.12);
-}
-
-.chess-player-label {
-  font-family: 'Libre Baskerville', serif;
+.chess-player-indicator {
+  position: absolute;
+  top: 20px;
+  font-family: 'Inter', sans-serif;
   font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 800;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(232, 213, 163, 0.5);
+  opacity: 0.5;
 }
 
 .chess-time {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 3.5rem;
+  font-family: 'monospace';
+  font-size: 4.5rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  color: #f0c040;
-  transition: color 0.2s ease, text-shadow 0.2s ease, opacity 0.2s ease;
+  letter-spacing: -2px;
+  transition: all 0.2s ease;
 }
 
-.chess-half.active .chess-time {
-  color: #fff;
-  text-shadow: 0 0 30px rgba(240, 192, 64, 0.7);
+/* Winner states */
+.chess-half.winner {
+  background-color: rgba(76, 175, 80, 0.2);
 }
-
-.chess-half.inactive .chess-time {
-  opacity: 0.35;
+.player1.winner .chess-time, .player2.winner .chess-time {
+  color: #4caf50;
+  text-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
 }
 
 .chess-half.loser .chess-time {
@@ -170,41 +172,49 @@
   opacity: 1;
 }
 
-.chess-half.winner .chess-time {
-  color: #88ff88;
-  text-shadow: 0 0 20px rgba(100, 255, 100, 0.5);
-}
-
 .chess-result {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #88ff88;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #4caf50;
+  position: absolute;
+  bottom: 30px;
+  animation: pulse 1.5s infinite;
 }
 
 .chess-divider {
-  width: 2px;
-  height: 80%;
-  align-self: center;
-  background: linear-gradient(to bottom, transparent, rgba(240, 192, 64, 0.5), transparent);
-  flex-shrink: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #4caf50;
+  z-index: 5;
 }
 
 .chess-reset-btn {
   position: absolute;
-  bottom: 1rem;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Libre Baskerville', serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #122b12;
-  background: #f0c040;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1.5rem;
+  transform: translate(-50%, -50%);
+  background: #333;
+  color: #fff;
+  border: 4px solid #4caf50;
+  border-radius: 50px;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  z-index: 20;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  transition: all 0.2s;
+}
+.chess-reset-btn:hover {
+  background: #4caf50;
+  color: #000;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }

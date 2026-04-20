@@ -1,59 +1,75 @@
-/* ── Poker Chip FAB ── */
 .cart-fab {
   position: fixed;
   bottom: 88px;
-  right: 16px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 90;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-
-  /* Poker chip look */
-  background:
-    radial-gradient(circle, transparent 38%, rgba(240, 192, 64, 0.18) 39%, rgba(240, 192, 64, 0.18) 42%, transparent 43%),
-    linear-gradient(145deg, #3d1c02 0%, #5a2d10 50%, #3d1c02 100%);
-  border: 3px dashed #f0c040;
-  box-shadow:
-    0 0 0 3px rgba(30, 10, 0, 0.9),
-    0 0 18px rgba(240, 192, 64, 0.3),
-    0 6px 20px rgba(0, 0, 0, 0.6),
-    inset 0 2px 4px rgba(255, 255, 255, 0.08),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
-
+  height: 56px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #122b12 0%, #1a3d1a 100%);
+  border: 1px solid rgba(240, 192, 64, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+  padding: 0 8px 0 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  animation: fab-slide-up 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
+  transition: all 0.2s ease;
+}
 
-  animation: fab-pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+.cart-fab:hover {
+  border-color: #f0c040;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 15px rgba(240, 192, 64, 0.2);
+  transform: translateX(-50%) translateY(-2px);
 }
 
 .cart-fab:active {
-  transform: scale(0.92);
-  box-shadow:
-    0 0 0 3px rgba(30, 10, 0, 0.9),
-    0 0 24px rgba(240, 192, 64, 0.5),
-    0 2px 8px rgba(0, 0, 0, 0.5),
-    inset 0 2px 4px rgba(255, 255, 255, 0.08),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+  transform: translateX(-50%) scale(0.96);
+}
+
+.cart-fab-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cart-fab-icon {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   color: #f0c040;
-  filter: drop-shadow(0 0 6px rgba(240, 192, 64, 0.5));
 }
 
-@keyframes fab-pop-in {
+.cart-fab-text {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.cart-fab-badge {
+  background: #f0c040;
+  color: #122b12;
+  font-weight: 800;
+  font-size: 0.95rem;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+@keyframes fab-slide-up {
   from {
-    transform: scale(0) rotate(-180deg);
+    transform: translateX(-50%) translateY(100px);
     opacity: 0;
   }
   to {
-    transform: scale(1) rotate(0deg);
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
   }
 }

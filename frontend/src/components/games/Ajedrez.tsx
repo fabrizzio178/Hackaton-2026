@@ -63,23 +63,6 @@ La partida termina en empate si:
 4. **Regla de los 50 Movimientos:** Pasan 50 jugadas sin capturas ni movimientos de peón.
 5. **Material Insuficiente:** Ningún jugador tiene piezas suficientes para dar mate.
 `
-function msToDigits(ms: number) {
-  const totalSec = Math.ceil(ms / 1000)
-  const m = Math.floor(totalSec / 60)
-  const s = totalSec % 60
-  return {
-    mT: Math.floor(m / 10),
-    mO: m % 10,
-    sT: Math.floor(s / 10),
-    sO: s % 10,
-  }
-}
-
-function digitsToMs(mT: number, mO: number, sT: number, sO: number) {
-  const m = mT * 10 + mO
-  const s = sT * 10 + sO
-  return (m * 60 + s) * 1000
-}
 
 function formatTime(ms: number) {
   const totalSec = Math.max(0, Math.ceil(ms / 1000))
@@ -88,29 +71,12 @@ function formatTime(ms: number) {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
 }
 
-function DigitSpinner({ value, max, onChange }: { value: number; max: number; onChange: (v: number) => void }) {
-  return (
-    <div className="digit-spinner">
-      <button className="digit-btn" type="button" onClick={() => onChange((value + 1) % (max + 1))}>▲</button>
-      <span className="digit-val">{String(value)}</span>
-      <button className="digit-btn" type="button" onClick={() => onChange((value - 1 + max + 1) % (max + 1))}>▼</button>
-    </div>
-  )
-}
-
 type ClockMode = 'setup' | 'running' | 'finished'
 
 export function Ajedrez({ onBack }: { onBack: () => void }) {
-  const DEFAULT_MS = 5 * 60 * 1000
-
-  const [mT, setMT] = useState(0)
-  const [mO, setMO] = useState(5)
-  const [sT, setST] = useState(0)
-  const [sO, setSO] = useState(0)
-
   const [mode, setMode] = useState<ClockMode>('setup')
-  const [player1Ms, setPlayer1Ms] = useState(DEFAULT_MS)
-  const [player2Ms, setPlayer2Ms] = useState(DEFAULT_MS)
+  const [player1Ms, setPlayer1Ms] = useState(0)
+  const [player2Ms, setPlayer2Ms] = useState(0)
   const [activePlayer, setActivePlayer] = useState<1 | 2>(1)
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -145,12 +111,11 @@ export function Ajedrez({ onBack }: { onBack: () => void }) {
     return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
   }, [mode, activePlayer])
 
-  function handleStart() {
-    const configMs = digitsToMs(mT, mO, sT, sO)
-    const time = configMs > 0 ? configMs : DEFAULT_MS
-    setPlayer1Ms(time)
-    setPlayer2Ms(time)
-    setActivePlayer(1)
+  function handleStartPreset(minutes: number) {
+    const timeMs = minutes * 60 * 1000
+    setPlayer1Ms(timeMs)
+    setPlayer2Ms(timeMs)
+    setActivePlayer(1) // Empiezan blancas
     setMode('running')
   }
 
@@ -164,8 +129,6 @@ export function Ajedrez({ onBack }: { onBack: () => void }) {
   function handleReset() {
     if (intervalRef.current) clearInterval(intervalRef.current)
     setMode('setup')
-    setPlayer1Ms(DEFAULT_MS)
-    setPlayer2Ms(DEFAULT_MS)
     setActivePlayer(1)
   }
 
@@ -177,46 +140,53 @@ export function Ajedrez({ onBack }: { onBack: () => void }) {
         <div className="chess-clock-area">
 
           {mode === 'setup' ? (
-            <div className="chess-setup">
-              <p className="chess-setup-label">Tiempo por jugador</p>
-              <div className="chess-spinners">
-                <DigitSpinner value={mT} max={9} onChange={setMT} />
-                <DigitSpinner value={mO} max={9} onChange={setMO} />
-                <span className="chess-colon">:</span>
-                <DigitSpinner value={sT} max={5} onChange={setST} />
-                <DigitSpinner value={sO} max={9} onChange={setSO} />
+            <div className="chess-setup-modes">
+              <h3 className="chess-setup-title">Seleccionar Tiempo</h3>
+              <div className="chess-preset-grid">
+                <button className="chess-preset-btn bullet" onClick={() => handleStartPreset(1)} type="button">
+                  <span className="preset-icon">⚡</span>
+                  <span className="preset-time">1 Min</span>
+                  <span className="preset-label">Bullet</span>
+                </button>
+                <button className="chess-preset-btn blitz" onClick={() => handleStartPreset(5)} type="button">
+                  <span className="preset-icon">🔥</span>
+                  <span className="preset-time">5 Min</span>
+                  <span className="preset-label">Blitz</span>
+                </button>
+                <button className="chess-preset-btn normal" onClick={() => handleStartPreset(10)} type="button">
+                  <span className="preset-icon">🧠</span>
+                  <span className="preset-time">10 Min</span>
+                  <span className="preset-label">Normal</span>
+                </button>
               </div>
-              <button className="chess-start-btn" type="button" onClick={handleStart}>
-                INICIAR
-              </button>
             </div>
           ) : (
             <div className="chess-halves">
-              {/* Player 2 (izquierda cuando rotado = arriba en portrait) */}
+              {/* Player 2 (izquierda cuando rotado = arriba en portrait) - Negras */}
               <div
-                className={`chess-half player2 ${mode === 'finished' ? (winner === 2 ? 'winner' : 'loser') : activePlayer === 2 ? 'active' : 'inactive'}`}
+                className={`chess-half player2 \${mode === 'finished' ? (winner === 2 ? 'winner' : 'loser') : activePlayer === 2 ? 'active' : 'inactive'}`}
                 onClick={() => handleTap(2)}
               >
-                <span className="chess-player-label">J2</span>
+                <div className="chess-player-indicator">Negras</div>
                 <span className="chess-time">{formatTime(player2Ms)}</span>
-                {mode === 'finished' && winner === 2 && <span className="chess-result">¡GANÓ!</span>}
+                {mode === 'finished' && winner === 2 && <span className="chess-result">GANADOR</span>}
               </div>
 
               <div className="chess-divider" />
 
-              {/* Player 1 (derecha cuando rotado = abajo en portrait) */}
+              {/* Player 1 (derecha cuando rotado = abajo en portrait) - Blancas */}
               <div
-                className={`chess-half player1 ${mode === 'finished' ? (winner === 1 ? 'winner' : 'loser') : activePlayer === 1 ? 'active' : 'inactive'}`}
+                className={`chess-half player1 \${mode === 'finished' ? (winner === 1 ? 'winner' : 'loser') : activePlayer === 1 ? 'active' : 'inactive'}`}
                 onClick={() => handleTap(1)}
               >
-                <span className="chess-player-label">J1</span>
+                <div className="chess-player-indicator">Blancas</div>
                 <span className="chess-time">{formatTime(player1Ms)}</span>
-                {mode === 'finished' && winner === 1 && <span className="chess-result">¡GANÓ!</span>}
+                {mode === 'finished' && winner === 1 && <span className="chess-result">GANADOR</span>}
               </div>
 
               {mode === 'finished' && (
                 <button className="chess-reset-btn" type="button" onClick={handleReset}>
-                  Reiniciar
+                  VOLVER
                 </button>
               )}
             </div>
