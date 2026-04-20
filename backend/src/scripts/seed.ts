@@ -10,11 +10,9 @@ const seedDatabase = async () => {
   try {
     console.log('⏳ Iniciando proceso de poblado de la base de datos...');
 
-    // Sincronizar y limpiar la base de datos
     await sequelize.sync({ force: true });
     console.log('✅ Base de datos reiniciada y sincronizada correctamente.');
 
-    // 1. Crear entidades independientes
     console.log('🎲 Creando juegos...');
     const juegos = await Juego.bulkCreate([
       { nombre: 'Catan' },
@@ -49,7 +47,6 @@ const seedDatabase = async () => {
       { nombre: 'Alquiler Truco', precioUnitario: 500, descripcion: 'Mazo de cartas españolas', idJuego: juegos[1].idJuego }
     ], { returning: true });
 
-    // 2. Crear entidades dependientes (Sesiones y Detalles)
     console.log('⏱️ Creando sesiones...');
     const sesiones = await Sesion.bulkCreate([
       { horaFechaInicio: new Date(), mesaId: mesas[0].id }, // Sesión en la mesa 1
@@ -58,17 +55,14 @@ const seedDatabase = async () => {
 
     console.log('📝 Creando detalles de mesa...');
     await DetalleMesa.bulkCreate([
-      // Detalles para la Sesión 1 (Mesa 1)
       { cantidadItem: 2, monto: 7000, idSesion: sesiones[0].idSesion, idProducto: productos[0].idProducto }, // 2x Pinta IPA
       { cantidadItem: 1, monto: 5000, idSesion: sesiones[0].idSesion, idProducto: productos[2].idProducto }, // 1x Papas Cheddar
       { cantidadItem: 1, monto: 2000, idSesion: sesiones[0].idSesion, idProducto: productos[4].idProducto }, // 1x Alquiler Catan
       
-      // Detalles para la Sesión 2 (Mesa 3)
       { cantidadItem: 4, monto: 14000, idSesion: sesiones[1].idSesion, idProducto: productos[1].idProducto }, // 4x Pinta Honey
       { cantidadItem: 1, monto: 500, idSesion: sesiones[1].idSesion, idProducto: productos[5].idProducto } // 1x Alquiler Truco
     ]);
 
-    // Opcional: Actualizamos los totales de las mesas según lo consumido
     await mesas[0].update({ total: 7000 + 5000 + 2000 });
     await mesas[2].update({ total: 14000 + 500 });
 

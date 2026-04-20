@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import reglasDB from '../data/reglas.json';
 
-// Inicializamos el SDK oficial de Gemini con la variable de entorno
 const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_KEY || '';
 const genAI = new GoogleGenerativeAI(apiKey);
 
@@ -34,50 +33,37 @@ export class AiController {
         2. Si preguntan por juegos fuera del manual (ej: Catan), pedí disculpas y decí que solo tienen Truco y Chinchón por ahora.
       `;
 
-      // Configuración del modelo y el system prompt
       const model = genAI.getGenerativeModel({
-        model: 'gemini-2.5-flash', // Este string es el oficial y estable en el SDK puro
+        model: 'gemini-2.5-flash',
         systemInstruction: systemPrompt,
       });
 
-      // Extraemos el último mensaje del usuario (la pregunta actual)
       const lastMessage = messages[messages.length - 1].content;
 
-      // Formateamos el historial previo para Gemini (cambiando 'assistant' por 'model')
       const history = messages.slice(0, -1).map((msg: any) => ({
         role: msg.role === 'user' ? 'user' : 'model',
         parts: [{ text: msg.content }],
       }));
 
-      // Iniciamos el chat con el historial
       const chat = model.startChat({ history });
 
-      // Pedimos el stream a Google
       const result = await chat.sendMessageStream(lastMessage);
 
-      // --- MAGIA DEL STREAMING MANUAL EN EXPRESS ---
-      // Configuramos los headers para que el frontend entienda que es un stream de texto
       res.setHeader('Content-Type', 'text/plain; charset=utf-8');
       res.setHeader('Transfer-Encoding', 'chunked');
       res.setHeader('Cache-Control', 'no-cache');
       res.setHeader('Connection', 'keep-alive');
 
-      // Iteramos sobre los pedacitos que manda Google y los escupimos al frontend
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
-        res.write(chunkText); // Enviamos el pedacito
+        res.write(chunkText);
       }
-
-      // Cerramos la conexión cuando termina
       res.end();
 
     } catch (error: any) {
-      console.error('❌ Error en el streaming manual:', error);
-      // Si el error pasa antes de empezar a mandar headers, devolvemos JSON
       if (!res.headersSent) {
         res.status(500).json({ error: 'Error interno del Mozo Virtual.', detalle: error.message });
       } else {
-        // Si ya estábamos streameando, simplemente cortamos la conexión
         res.end('\n[Error de conexión con el Mozo]');
       }
     }
