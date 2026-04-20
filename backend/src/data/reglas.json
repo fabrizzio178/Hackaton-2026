@@ -52,6 +52,49 @@
         "como_cortar": "Para que un jugador pueda cortar (bajar sus cartas y finalizar la ronda), debe tener la mayoría de sus cartas en combinaciones válidas y la suma del valor de las cartas sueltas (sin combinar) debe ser exactamente igual o menor a 5 puntos.",
         "calculo_de_puntos_al_cortar": "Cuando un jugador corta, el resto debe mostrar sus combinaciones y sumar el valor de sus cartas sueltas (figuras valen 10, las demás su valor nominal). Si el jugador que cortó no tiene ninguna carta suelta y descarta la última, resta 10 puntos (-10). Si un jugador logra armar una escalera de 7 cartas del mismo palo ('Chinchón'), gana la partida automáticamente si no usa comodines, o resta 50 puntos si utilizó un comodín. Los jugadores eliminados por superar los 100 puntos pueden pagar un 'enganche' para reingresar igualando el puntaje del jugador que tenga más puntos acumulados en ese momento."
       }
+    },
+    {
+      "nombre": "Ajedrez",
+      "mazo": "Tablero cuadriculado de 64 casillas (32 oscuras, 32 claras) y 32 piezas (16 blancas, 16 negras).",
+      "objetivo_basico": "Acorralar al rey del oponente provocando que no pueda evitar ser capturado, logrando un 'Jaque Mate'.",
+      "jerarquia_cartas": [
+        "Rey",
+        "Reina",
+        "Torre",
+        "Alfil",
+        "Caballo",
+        "Peón"
+      ],
+      "sistema_puntuacion": "En el juego tradicional no se cuentan puntos. Se declara un ganador por Jaque Mate, desconexión por tiempo, o abandono. Si ninguno puede ganar o se estancan los movimientos, la partida se declara Empate (Tablas).",
+      "mecanicas_especificas": {
+        "movimientos": "El Peón avanza recto pero captura en diagonal. El Caballo salta en forma de 'L'. El Alfil se mueve en diagonal. La Torre horizontal y vertical. La Reina (Dama) reúne los movimientos de Torre y Alfil. El Rey solo mueve una casilla a su alrededor pero en cualquier dirección.",
+        "situaciones_particulares": "Jaque: El Rey es directamente atacado y obligado a moverse. Coronación: Si un peón cruza el tablero hasta el fondo del enemigo, puede convertirse en cualquier pieza mayor (Reina, Caballo, Torre, Alfil). Enroque: Un movimiento de escudo combinando al Rey y una Torre que no se hayan movido en toda la partida."
+      }
+    },
+    {
+      "nombre": "Poker — Texas Hold'em",
+      "mazo": "Mazo francés de 52 cartas (Picas, Corazones, Tréboles, Diamantes) sin comodines.",
+      "objetivo_basico": "Formar la mejor mano de 5 cartas de toda la mesa para llevarse las apuestas acumuladas (el Pozo), o provocar que los oponentes se rindan antes de revelar las cartas.",
+      "jerarquia_cartas": [
+        "As (A)",
+        "K (Rey)",
+        "Q (Reina)",
+        "J (Jota)",
+        "10",
+        "9",
+        "8",
+        "7",
+        "6",
+        "5",
+        "4",
+        "3",
+        "2"
+      ],
+      "sistema_puntuacion": "Las manos ganadoras de mayor a menor valor son: 1. Escalera Real, 2. Escalera de Color, 3. Póker (Cuatro del mismo valor), 4. Full House (Trío + Par), 5. Color (Todas del mismo palo), 6. Escalera (Consecutivas de distintos palos), 7. Trío, 8. Doble Par, 9. Par, 10. Carta Alta.",
+      "mecanicas_especificas": {
+        "fases_de_ronda": "1. Pre-Flop: Se reparten dos cartas ocultas a cada jugador y apuestan. 2. Flop: Se exponen 3 cartas comunitarias en la mesa. 3. Turn: Se muestra una cuarta carta comunitaria. 4. River: Se destapa la quinta y última carta comunitaria.",
+        "acciones_de_apuesta": "Apostar (Bet) introduce monto al pozo. Retirarse (Fold) si tu mano es mala. Igualar (Call) para empatar la máxima apuesta y seguir jugando. Aumentar (Raise) sumarle al valor que pide la mesa amenazando cartas fuertes. Pasar (Check) cuando no hay apuestas pendientes."
+      }
     }
   ]
 }

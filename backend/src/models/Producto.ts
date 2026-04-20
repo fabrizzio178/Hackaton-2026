@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/database';
 import { Juego } from './Juego';
+import { Categoria } from './Categoria';
 
 export interface ProductoAttributes {
   idProducto?: string;
@@ -8,7 +9,9 @@ export interface ProductoAttributes {
   precioUnitario: number;
   marca?: string;
   descripcion?: string;
+  emoji?: string;
   idJuego?: string; // FK, opcional
+  idCategoria?: string; // FK, opcional
 }
 
 export class Producto extends Model<ProductoAttributes> implements ProductoAttributes {
@@ -17,7 +20,9 @@ export class Producto extends Model<ProductoAttributes> implements ProductoAttri
   public precioUnitario!: number;
   public marca!: string;
   public descripcion!: string;
+  public emoji!: string;
   public idJuego!: string;
+  public idCategoria!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -46,12 +51,24 @@ Producto.init(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    emoji: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     idJuego: {
       type: DataTypes.UUID,
       allowNull: true,
       references: {
         model: Juego,
         key: 'idJuego',
+      },
+    },
+    idCategoria: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: Categoria,
+        key: 'id', // Categoria PK is id
       },
     },
   },
@@ -65,3 +82,6 @@ Producto.init(
 
 Juego.hasMany(Producto, { foreignKey: 'idJuego', as: 'productos' });
 Producto.belongsTo(Juego, { foreignKey: 'idJuego', as: 'juego' });
+
+Categoria.hasMany(Producto, { foreignKey: 'idCategoria', as: 'productos' });
+Producto.belongsTo(Categoria, { foreignKey: 'idCategoria', as: 'categoria' });

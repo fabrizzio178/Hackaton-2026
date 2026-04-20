@@ -1,5 +1,6 @@
 import { Producto, ProductoAttributes } from '../models/Producto';
 import { Juego } from '../models/Juego';
+import { Categoria } from '../models/Categoria';
 
 export class ProductoService {
   public async createProducto(data: ProductoAttributes): Promise<Producto> {
@@ -7,11 +8,11 @@ export class ProductoService {
   }
 
   public async getAllProductos(): Promise<Producto[]> {
-    return await Producto.findAll({ include: [{ model: Juego, as: 'juego' }] });
+    return await Producto.findAll({ include: [{ model: Juego, as: 'juego' }, { model: Categoria, as: 'categoria' }] });
   }
 
   public async getProductoById(id: string): Promise<Producto | null> {
-    return await Producto.findByPk(id, { include: [{ model: Juego, as: 'juego' }] });
+    return await Producto.findByPk(id, { include: [{ model: Juego, as: 'juego' }, { model: Categoria, as: 'categoria' }] });
   }
 
   public async updateProducto(id: string, data: Partial<ProductoAttributes>): Promise<Producto | null> {
